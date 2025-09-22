@@ -23,7 +23,7 @@ class Product
     private ?int $category_id = null;
 
     #[ORM\Column]
-    private ?int $original_price = null;
+    private ?int $price = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Categories $category = null;
@@ -76,14 +76,14 @@ class Product
         return $this;
     }
 
-    public function getOriginalPrice(): ?int
+    public function gePrice(): ?int
     {
-        return $this->original_price;
+        return $this->price;
     }
 
-    public function setOriginalPrice(int $original_price): static
+    public function setPrice(int $price): static
     {
-        $this->original_price = $original_price;
+        $this->price = $price;
 
         return $this;
     }
