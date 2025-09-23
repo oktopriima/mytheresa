@@ -14,15 +14,14 @@ final class ListController extends AbstractController
     public function index(Request $request, ListServices $services): JsonResponse
     {
         $srv = $services->call($request->query->all());
-        $output = [
-            'status' => $srv->status(),
-        ];
         if ($srv->fail()) {
-            $output['message'] = $srv->message();
             $output['error'] = $srv->result();
         } else {
             $output['data'] = $srv->result();
         }
+
+        $output['message'] = $srv->message();
+        $output['status'] = $srv->status();
 
         $response = new JsonResponse();
         $response->setStatusCode($srv->httpCode());

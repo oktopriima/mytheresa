@@ -15,10 +15,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ListServices extends AbstractServices
 {
     public function __construct(
-        private readonly ProductRepository $productRepository,
+        private readonly ProductRepository    $productRepository,
         private readonly PriceRulesRepository $priceRulesRepository,
-        public DenormalizerInterface       $denormalizer,
-        public ValidatorInterface          $validator,
+        public DenormalizerInterface          $denormalizer,
+        public ValidatorInterface             $validator,
     )
     {
         parent::__construct($this->denormalizer, $this->validator);
