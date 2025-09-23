@@ -12,7 +12,6 @@ use App\Request\Product\ListResponse;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-
 class ListServices extends AbstractServices
 {
     public function __construct(

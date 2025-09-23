@@ -79,4 +79,15 @@ class ListRequest
     {
         $this->categories = $categories;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'priceLessThan' => $this->getPriceLessThan(),
+            'category' => $this->getCategory(),
+            'categories' => $this->getCategories(),
+            'page' => $this->getPage(),
+            'limit' => $this->getLimit(),
+        ];
+    }
 }
