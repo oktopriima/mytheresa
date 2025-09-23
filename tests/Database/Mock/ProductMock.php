@@ -31,4 +31,17 @@ class ProductMock
         }
         return $products;
     }
+
+    public static function single(): Product {
+        $product = new Product();
+        $product->setSku('000003');
+        $product->setName('Product name');
+        $product->setPrice(100);
+
+        $category = new Categories();
+        $category->setName('Category name');
+        $product->setCategories($category);
+
+        return $product;
+    }
 }
