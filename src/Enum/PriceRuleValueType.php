@@ -4,6 +4,6 @@ namespace App\Enum;
 
 enum PriceRuleValueType: string
 {
-    const AMOUNT = 'amount';
-    const PERCENTAGE = 'percentage';
+    case AMOUNT = "AMOUNT";
+    case PERCENTAGE = "PERCENTAGE";
 }

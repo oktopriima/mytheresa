@@ -13,9 +13,6 @@ class PriceRuleConditions
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $price_rule_id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $condition_key = null;
 
@@ -33,18 +30,6 @@ class PriceRuleConditions
     public function setId(int $id): static
     {
         $this->id = $id;
-
-        return $this;
-    }
-
-    public function getPriceRuleId(): ?int
-    {
-        return $this->price_rule_id;
-    }
-
-    public function setPriceRuleId(int $price_rule_id): static
-    {
-        $this->price_rule_id = $price_rule_id;
 
         return $this;
     }

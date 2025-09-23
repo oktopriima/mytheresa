@@ -16,28 +16,16 @@ class PriceRulesRepository extends ServiceEntityRepository
         parent::__construct($registry, PriceRules::class);
     }
 
-//    /**
-//     * @return PriceRules[] Returns an array of PriceRules objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?PriceRules
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * Return list of active price rules
+     * @return PriceRules[] Returns an array of PriceRules objects
+     */
+    public function findByIsActive(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.is_active = :is_active')
+            ->setParameter('is_active', true)
+            ->getQuery()
+            ->getResult();
+    }
 }

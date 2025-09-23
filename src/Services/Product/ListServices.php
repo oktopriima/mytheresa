@@ -32,13 +32,13 @@ class ListServices extends AbstractServices
             return self::error($errors, 'Error validate the request');
         }
 
-        $priceRules = $this->priceRulesRepository->findAll();
+        $priceRules = $this->priceRulesRepository->findByIsActive();
+        $products = $this->productRepository->findByParams($this->dto);
 
-        $products = $this->productRepository->findAll();
         $result = array_map(fn($product) => new ListResponse(
             $product->getSku(),
             $product->getName(),
-            $product->getCategory()->getName(),
+            $product->getCategories()->getName(),
             ((new ProductPrices($priceRules, $product))->call()),
         ), $products);
 

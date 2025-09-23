@@ -20,13 +20,11 @@ class Product
     private ?string $name = null;
 
     #[ORM\Column]
-    private ?int $category_id = null;
-
-    #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Categories $category = null;
+    #[ORM\ManyToOne(inversedBy: 'product')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categories $categories = null;
 
     public function getId(): ?int
     {
@@ -64,18 +62,6 @@ class Product
         return $this;
     }
 
-    public function getCategoryId(): ?int
-    {
-        return $this->category_id;
-    }
-
-    public function setCategoryId(int $category_id): static
-    {
-        $this->category_id = $category_id;
-
-        return $this;
-    }
-
     public function gePrice(): ?int
     {
         return $this->price;
@@ -88,14 +74,14 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Categories
+    public function getCategories(): ?Categories
     {
-        return $this->category;
+        return $this->categories;
     }
 
-    public function setCategory(?Categories $category): static
+    public function setCategories(?Categories $categories): static
     {
-        $this->category = $category;
+        $this->categories = $categories;
 
         return $this;
     }

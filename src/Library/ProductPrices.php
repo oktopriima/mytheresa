@@ -49,7 +49,7 @@ class ProductPrices
                         }
                         break;
                     case "category":
-                        if ($this->product->getCategory()->getName() == $condition->getConditionValue()) {
+                        if ($this->product->getCategories()->getName() == $condition->getConditionValue()) {
                             $amt = $this->discountAmount($priceRule->getValueType(), $priceRule->getAmount());
                         }
                         break;
@@ -67,11 +67,11 @@ class ProductPrices
         }
 
         $this->discountRemark = $discountRemark;
-        $this->finalPrice = $this->finalPrice - $discountRemark;
+        $this->finalPrice = $this->finalPrice - $discountAmount;
     }
 
 
-    private function discountAmount(string $type, int $amount): int
+    private function discountAmount(PriceRuleValueType $type, int $amount): int
     {
         if ($type == PriceRuleValueType::PERCENTAGE) return ($amount * $this->product->gePrice()) / 100;
         if ($type == PriceRuleValueType::AMOUNT) return $amount;

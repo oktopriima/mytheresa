@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Enum\PriceRuleType;
 use App\Enum\PriceRuleValueType;
 use App\Repository\PriceRulesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,9 +15,6 @@ class PriceRules
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(enumType: PriceRuleType::class)]
-    private ?PriceRuleType $rule_type = null;
 
     #[ORM\Column(enumType: PriceRuleValueType::class)]
     private ?PriceRuleValueType $value_type = null;
@@ -52,24 +48,12 @@ class PriceRules
         return $this;
     }
 
-    public function getRuleType(): ?PriceRuleType
-    {
-        return $this->rule_type;
-    }
-
-    public function setRuleType(PriceRuleType $rule_type): static
-    {
-        $this->rule_type = $rule_type;
-
-        return $this;
-    }
-
     public function getValueType(): ?PriceRuleValueType
     {
         return $this->value_type;
     }
 
-    public function setValueType(PriceRuleValueType $value_type): static
+    public function setValueType(PriceRuleValueType $value_type): self
     {
         $this->value_type = $value_type;
 

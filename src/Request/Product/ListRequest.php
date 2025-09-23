@@ -14,6 +14,14 @@ class ListRequest
     #[Context([AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false])]
     public ?int $priceLessThan = null;
 
+    #[Assert\Type('string', message: "Category must be a string")]
+    public ?string $category = null;
+
+    #[Assert\All([
+        new Assert\Type('string'),
+    ])]
+    public ?array $categories = null;
+
     #[Assert\Valid]
     public PaginationRequest $pagination;
 
@@ -50,5 +58,25 @@ class ListRequest
     public function setPage(?string $page): void
     {
         $this->pagination->page = $page !== null ? (int)$page : 1;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): void
+    {
+        $this->category = $category !== null ? $category : null;
+    }
+
+    public function getCategories(): ?array
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(?array $categories): void
+    {
+        $this->categories = $categories;
     }
 }
