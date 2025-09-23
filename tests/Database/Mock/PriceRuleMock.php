@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Controller\Database\Mock;
+namespace App\Tests\Database\Mock;
 
 use App\DataFixtures\PriceRuleFixtures;
 use App\Entity\PriceRuleConditions;

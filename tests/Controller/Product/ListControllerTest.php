@@ -7,15 +7,31 @@ use App\Repository\PriceRulesRepository;
 use App\Repository\ProductRepository;
 use App\Request\Product\ListRequest;
 use App\Services\Product\ListServices;
-use App\Tests\Controller\Database\Mock\PriceRuleMock;
-use App\Tests\Controller\Database\Mock\ProductMock;
+use App\Tests\Database\Mock\PriceRuleMock;
+use App\Tests\Database\Mock\ProductMock;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 final class ListControllerTest extends TestCase
 {
+    protected ProductRepository $productRepository;
+    protected PriceRulesRepository $priceRulesRepository;
+    protected DenormalizerInterface $denormalizer;
+    protected ValidatorInterface $validator;
+
+    public function setUp(): void
+    {
+        $this->productRepository = $this->createMock(ProductRepository::class);
+        $this->priceRulesRepository = $this->createMock(PriceRulesRepository::class);
+        $this->denormalizer = $this->createMock(DenormalizerInterface::class);
+        $this->validator = Validation::createValidatorBuilder()
+            ->enableAttributeMapping()
+            ->getValidator();
+    }
+
     public function testIndexWithFailedParamValidation(): void
     {
         $minPrice = 1000000;
@@ -27,23 +43,15 @@ final class ListControllerTest extends TestCase
         $dto->setPage($page);
         $dto->setLimit($limit);
 
-        $productRepo = $this->createMock(ProductRepository::class);
-        $priceRuleRepo = $this->createMock(PriceRulesRepository::class);
-
-        $denormalize = $this->createMock(DenormalizerInterface::class);
-        $denormalize->method('denormalize')
+        $this->denormalizer->method('denormalize')
             ->willReturn($dto);
-
-        $validator = Validation::createValidatorBuilder()
-            ->enableAttributeMapping()
-            ->getValidator();
 
         $req = new Request();
         $req->query->set('priceLessThan', $minPrice);
         $req->query->set('page', $page);
         $req->query->set('limit', $limit);
 
-        $service = new ListServices($productRepo, $priceRuleRepo, $denormalize, $validator);
+        $service = new ListServices($this->productRepository, $this->priceRulesRepository, $this->denormalizer, $this->validator);
         $controller = new ListController();
 
         $response = $controller->index($req, $service);
@@ -67,22 +75,15 @@ final class ListControllerTest extends TestCase
         $dto->setPage($page);
         $dto->setLimit($limit);
 
-        $productRepo = $this->createMock(ProductRepository::class);
-        $priceRuleRepo = $this->createMock(PriceRulesRepository::class);
-        $denormalize = $this->createMock(DenormalizerInterface::class);
-        $denormalize->method('denormalize')
+        $this->denormalizer->method('denormalize')
             ->willReturn($dto);
-
-        $validator = Validation::createValidatorBuilder()
-            ->enableAttributeMapping()
-            ->getValidator();
 
         $req = new Request();
         $req->query->set('priceLessThan', $minPrice);
         $req->query->set('page', $page);
         $req->query->set('limit', $limit);
 
-        $service = new ListServices($productRepo, $priceRuleRepo, $denormalize, $validator);
+        $service = new ListServices($this->productRepository, $this->priceRulesRepository, $this->denormalizer, $this->validator);
         $controller = new ListController();
 
         $response = $controller->index($req, $service);
@@ -95,30 +96,20 @@ final class ListControllerTest extends TestCase
 
     public function testIndexWithPriceRulesImplementations(): void
     {
+        $dto = new ListRequest();
         $products = ProductMock::multiple();
-        $productRepo = $this->createMock(ProductRepository::class);
-        $productRepo->method('findByParams')
-            ->with((function () {
-                return new ListRequest();
-            })())
+        $this->productRepository->method('findByParams')
+            ->with($dto)
             ->willReturn($products);
 
         $priceRules = PriceRuleMock::multiple();
-        $priceRuleRepo = $this->createMock(PriceRulesRepository::class);
-        $priceRuleRepo->method('findByIsActive')
+        $this->priceRulesRepository->method('findByIsActive')
             ->willReturn($priceRules);
 
-        $denormalize = $this->createMock(DenormalizerInterface::class);
-        $validator = Validation::createValidatorBuilder()
-            ->enableAttributeMapping()
-            ->getValidator();
+        $this->denormalizer->method('denormalize')
+            ->willReturn($dto);
 
-        $denormalize->method('denormalize')
-            ->willReturn((function () {
-                return new ListRequest();
-            })());
-
-        $service = new ListServices($productRepo, $priceRuleRepo, $denormalize, $validator);
+        $service = new ListServices($this->productRepository, $this->priceRulesRepository, $this->denormalizer, $this->validator);
         $controller = new ListController();
 
         $req = new Request();
