@@ -45,13 +45,11 @@ class PriceRuleFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-
         foreach (self::PRICE_RULES_EXAMPLE as $item) {
             $p = new PriceRules();
             $p->setValueType($item['type']);
             $p->setIsActive($item['is_active']);
             $p->setAmount($item['amount']);
-            $manager->persist($p);
 
             foreach ($item['conditions'] as $condition) {
                 $c = new PriceRuleConditions();
@@ -59,8 +57,12 @@ class PriceRuleFixtures extends Fixture
                 $c->setConditionValue($condition['condition_value']);
                 $c->setPriceRules($p);
 
+                $p->setCondition($c);
                 $manager->persist($c);
             }
+
+            $manager->persist($p);
+
         }
 
         $manager->flush();
