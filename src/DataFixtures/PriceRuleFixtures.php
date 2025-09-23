@@ -10,42 +10,43 @@ use Doctrine\Persistence\ObjectManager;
 
 class PriceRuleFixtures extends Fixture
 {
+    const PRICE_RULES_EXAMPLE = [
+        [
+            'type' => PriceRuleValueType::PERCENTAGE,
+            'is_active' => true,
+            'amount' => 30,
+            'conditions' => [
+                [
+                    'condition_key' => 'sku',
+                    'condition_value' => '000003',
+                ]
+            ],
+        ],
+        [
+            'type' => PriceRuleValueType::PERCENTAGE,
+            'is_active' => true,
+            'amount' => 15,
+            'conditions' => [
+                [
+                    'condition_key' => 'category',
+                    'condition_value' => 'boots',
+                ],
+                [
+                    'condition_key' => 'category',
+                    'condition_value' => 'sandals',
+                ],
+                [
+                    'condition_key' => 'category',
+                    'condition_value' => 'sneakers',
+                ]
+            ],
+        ]
+    ];
+
     public function load(ObjectManager $manager): void
     {
-        $data = [
-            [
-                'type' => PriceRuleValueType::PERCENTAGE,
-                'is_active' => true,
-                'amount' => 30,
-                'conditions' => [
-                    [
-                        'condition_key' => 'sku',
-                        'condition_value' => '000003',
-                    ]
-                ],
-            ],
-            [
-                'type' => PriceRuleValueType::PERCENTAGE,
-                'is_active' => true,
-                'amount' => 15,
-                'conditions' => [
-                    [
-                        'condition_key' => 'category',
-                        'condition_value' => 'boots',
-                    ],
-                    [
-                        'condition_key' => 'category',
-                        'condition_value' => 'sandals',
-                    ],
-                    [
-                        'condition_key' => 'category',
-                        'condition_value' => 'sneakers',
-                    ]
-                ],
-            ]
-        ];
 
-        foreach ($data as $item) {
+        foreach (self::PRICE_RULES_EXAMPLE as $item) {
             $p = new PriceRules();
             $p->setValueType($item['type']);
             $p->setIsActive($item['is_active']);

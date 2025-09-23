@@ -92,7 +92,7 @@ class PriceRules
         return $this->conditions;
     }
 
-    public function addCondition(PriceRuleConditions $condition): static
+    public function setCondition(PriceRuleConditions $condition): static
     {
         if (!$this->conditions->contains($condition)) {
             $this->conditions->add($condition);

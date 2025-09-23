@@ -13,7 +13,7 @@ final class PingControllerTest extends WebTestCase
 
         $response = json_decode($client->getResponse()->getContent(), true);
 
-        $this->assertEquals("ok", $response['status']);
+        $this->assertTrue($response['status']);
         $this->assertEquals("pong", $response['message']);
         $this->assertSame(200, $client->getResponse()->getStatusCode());
         $this->assertJson($client->getResponse()->getContent());

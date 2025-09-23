@@ -12,7 +12,7 @@ final class PingController extends AbstractController
     public function index(): JsonResponse
     {
         return $this->json([
-            'status' => 'ok',
+            'status' => true,
             'message' => 'pong',
         ]);
     }
