@@ -17,9 +17,8 @@ APP_ENV=prod php bin/console cache:warmup
 echo "Running database migrations..."
 php bin/console doctrine:migrations:migrate --no-interaction
 
-
-# Run seeders/fixtures
 if [ "$APP_ENV" != "prod" ]; then
+    # Run seeders/fixtures
     echo "Running fixtures..."
     php bin/console doctrine:fixtures:load --no-interaction
 fi

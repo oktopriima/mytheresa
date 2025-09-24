@@ -10,10 +10,10 @@ The app is containerized with **Docker** for easier local development.
 
 Before starting, ensure you have:
 
-- PHP >= 8.1 (8.3 recommended)
+- PHP >= 8.3 (8.3 recommended)
 - Composer
 - MySQL >= 8.0
-- Symfony CLI (optional, but recommended)
+- Symfony CLI (optional for manual setup)
 - Docker & Docker Compose (if using container setup)
 
 ---
@@ -23,7 +23,9 @@ Before starting, ensure you have:
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/your-username/mytheresa.git
-cd mytheresa
+```
+```bash
+cd mytheresa && composer install
 ```
 ### Configure environment variables
 Copy the example .env file and adjust as needed:
@@ -32,16 +34,19 @@ cp .env.example .env
 ```
 update the credentials
 ```bash
-APP_ENV=dev
-APP_SECRET=your_app_secret_here
+# MYSQL ENVIRONMENT
+MYSQL_ROOT_PASSWORD=root_pass
+MYSQL_DATABASE=mytheresa
+MYSQL_USER=mytheresa_user
+MYSQL_PASSWORD=mytheresa_pass
+MYSQL_HOST=database
+MYSQL_PORT=3306
+MYSQL_SERVER_VERSION=8.0.32
+MYSQL_CHARSET=utf8mb4
 
-DB_USER=mytheresa
-DB_PASSWORD=sapi123
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_NAME=mytheresa
-DB_SERVER_VERSION=8.0.32
-DB_CHARSET=utf8mb4
+# SYMFONY ENVIRONMENT
+APP_ENV=dev
+APP_SECRET=your_symfony_secret_key
 ```
 
 ### 2. 🐘 Manual Setup (without Docker)
@@ -73,7 +78,7 @@ symfony serve:start
 ```bash
 docker-compose up --build -d
 ```
-All the migration and fixtures loader already put into `entrypoint.sh` file
+All the migration and fixtures loader already put into `entrypoint.sh` file when `APP_ENV=dev`
 
 #### 2. Access the app:
 👉 http://127.0.0.1:8000

@@ -12,7 +12,6 @@ RUN apk update \
 WORKDIR /var/www/mytheresa
 
 # Copy application files and install Composer dependencies
-#COPY . /var/www/mytheresa
 COPY . .
 
 # Run Composer install
@@ -41,6 +40,6 @@ WORKDIR /var/www/mytheresa
 COPY --from=builder /var/www/mytheresa /var/www/mytheresa
 
 RUN composer config platform.php 8.3 \
-    && composer install --no-dev --no-interaction --optimize-autoloader --no-scripts
+    && composer install --no-interaction --optimize-autoloader
 
 CMD ["php-fpm"]

@@ -14,8 +14,6 @@ services:
       - database
     entrypoint: [ "/bin/sh", "entrypoint.sh" ]
     command: [ "php-fpm" ]
-    environment:
-      APP_ENV: dev
 
   nginx:
     image: nginx:alpine
