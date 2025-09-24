@@ -28,7 +28,7 @@ cd mytheresa
 ### Configure environment variables
 Copy the example .env file and adjust as needed:
 ```bash
-cp .env .env.example
+cp .env.example .env
 ```
 update the credentials
 ```bash
